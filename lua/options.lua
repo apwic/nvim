@@ -59,4 +59,7 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 50
 
+-- Line numbers etc in Netrw
+vim.cmd [[let g:netrw_bufsettings = 'noma nomod nu nobl nowrap ro']]
+
 -- vim: ts=2 sts=2 sw=2 et
