@@ -55,4 +55,13 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Obsidian Keymap
+vim.keymap.set('n', 'gf', function()
+  if require('obsidian').util.cursor_on_markdown_link() then
+    return '<cmd>ObsidianFollowLink<CR>'
+  else
+    return 'gf'
+  end
+end, { noremap = false, expr = true })
+
 -- vim: ts=2 sts=2 sw=2 et
