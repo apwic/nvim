@@ -28,5 +28,8 @@ return {
       min_chars = 2,
     },
     ui = { enable = false },
+    attachments = {
+      img_folder = '0 - Attachment',
+    },
   },
 }
