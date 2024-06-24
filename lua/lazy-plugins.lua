@@ -60,7 +60,7 @@ require('lazy').setup({
 
   -- require 'apwic.plugins.debug',
   require 'apwic.plugins.indent_line',
-  require 'apwic.plugins.lint',
+  -- require 'apwic.plugins.lint',
   require 'apwic.plugins.autopairs',
   -- require 'apwic.plugins.neo-tree',
 
