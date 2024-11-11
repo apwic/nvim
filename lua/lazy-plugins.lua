@@ -56,6 +56,8 @@ require('lazy').setup({
 
   require 'apwic/plugins/vim-pencil',
 
+  require 'apwic/plugins/bufferline',
+
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
   -- place them in the correct locations.
@@ -64,7 +66,7 @@ require('lazy').setup({
   require 'apwic.plugins.indent_line',
   -- require 'apwic.plugins.lint',
   require 'apwic.plugins.autopairs',
-  -- require 'apwic.plugins.neo-tree',
+  require 'apwic.plugins.neo-tree',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
