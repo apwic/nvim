@@ -52,7 +52,7 @@ require('lazy').setup({
 
   require 'apwic/plugins/obsidian',
 
-  require 'apwic/plugins/hardtime',
+  -- require 'apwic/plugins/hardtime',
 
   require 'apwic/plugins/vim-pencil',
 
