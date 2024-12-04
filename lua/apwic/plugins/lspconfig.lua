@@ -158,7 +158,7 @@ return {
       local servers = {
         -- clangd = {},
         pyright = {},
-        -- rust_analyzer = {},
+        rust_analyzer = {},
         markdown_oxide = {},
         texlab = {},
         gopls = {
