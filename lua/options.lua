@@ -65,6 +65,9 @@ vim.opt.shiftwidth = 4
 -- vim.opt.expandtab = true
 vim.opt.softtabstop = 4
 
+-- ColorColumn
+vim.opt.colorcolumn = '80'
+
 -- Line numbers etc in Netrw
 vim.cmd [[let g:netrw_bufsettings = 'noma nomod nu nobl nowrap ro']]
 
