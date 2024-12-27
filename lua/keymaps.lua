@@ -30,7 +30,6 @@ vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 --  Use CTRL+<hjkl> to switch between windows
 --
 --  See `:help wincmd` for a list of all window commands
-vim.keymap.set('i', 'jk', '<Esc>', { desc = 'Exit insert mode' })
 vim.keymap.set('n', '<leader>tt', '<cmd>tabnew<cr>', { desc = 'Create new tab' })
 vim.keymap.set('n', '<leader>tn', '<cmd>:tabnext<cr>', { desc = 'Move to next tab' })
 vim.keymap.set('n', '<leader>tp', '<cmd>:tabprev<cr>', { desc = 'Move to previous tab' })
