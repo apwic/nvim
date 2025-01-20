@@ -62,6 +62,10 @@ return {
         --   },
         -- },
         -- pickers = {}
+        defaults = {
+          dynamic_preview_title = true,
+          layout_strategy = 'vertical',
+        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
