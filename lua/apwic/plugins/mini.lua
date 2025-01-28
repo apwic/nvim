@@ -22,7 +22,9 @@ return {
       --  and try some other statusline plugin
       local statusline = require 'mini.statusline'
       -- set use_icons to true if you have a Nerd Font
-      statusline.setup { use_icons = vim.g.have_nerd_font }
+      statusline.setup {
+        use_icons = vim.g.have_nerd_font,
+      }
 
       -- You can configure sections in the statusline by overriding their
       -- default behavior. For example, here we set the section for
@@ -31,6 +33,18 @@ return {
       statusline.section_location = function()
         return '%2l:%-2v'
       end
+
+      -- Display file path in winbar
+      vim.api.nvim_create_autocmd('BufEnter', {
+        callback = function()
+          local filepath = vim.fn.expand '%:p' -- Get absolute path
+          local home = vim.fn.expand '$HOME' -- Get home directory path
+          if filepath:find(home, 1, true) == 1 then
+            filepath = filepath:gsub('^' .. vim.pesc(home), '~') -- Replace $HOME with ~
+          end
+          vim.o.winbar = filepath
+        end,
+      })
 
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
