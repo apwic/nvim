@@ -5,8 +5,13 @@ return {
     event = { 'BufReadPre', 'BufNewFile' },
     config = function()
       local lint = require 'lint'
-      lint.linters_by_ft = {}
-      -- lint.linters_by_ft['python'] = { 'pylint' }
+      lint.linters_by_ft = {
+        json = { 'jsonlint' },
+        markdown = { 'vale' },
+        text = { 'vale' },
+        rst = { 'vale' },
+        go = { 'golangcilint' },
+      }
 
       -- To allow other plugins to add linters to require('lint').linters_by_ft,
       -- instead set linters_by_ft like this:
@@ -49,6 +54,18 @@ return {
           require('lint').try_lint()
         end,
       })
+
+      -- Show linters for the current buffer's file type
+      vim.api.nvim_create_user_command('LintInfo', function()
+        local filetype = vim.bo.filetype
+        local linters = require('lint').linters_by_ft[filetype]
+
+        if linters then
+          print('Linters for ' .. filetype .. ': ' .. table.concat(linters, ', '))
+        else
+          print('No linters configured for filetype: ' .. filetype)
+        end
+      end, {})
     end,
   },
 }
