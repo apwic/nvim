@@ -24,6 +24,9 @@ return {
       -- set use_icons to true if you have a Nerd Font
       statusline.setup {
         use_icons = vim.g.have_nerd_font,
+        section_filename = function()
+          return ''
+        end,
       }
 
       -- You can configure sections in the statusline by overriding their
@@ -32,6 +35,12 @@ return {
       ---@diagnostic disable-next-line: duplicate-set-field
       statusline.section_location = function()
         return '%2l:%-2v'
+      end
+
+      -- Remove the file path in status line
+      ---@diagnostic disable-next-line: duplicate-set-field
+      statusline.section_filename = function()
+        return ''
       end
 
       -- Display file path in winbar
