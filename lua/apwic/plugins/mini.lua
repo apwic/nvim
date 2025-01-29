@@ -44,14 +44,22 @@ return {
       end
 
       -- Display file path in winbar
+      -- Get the default colors of WinBar and WinBarNC
+      local winbar_active = vim.api.nvim_get_hl(0, { name = 'WinBar' })
+      local winbar_nc = vim.api.nvim_get_hl(0, { name = 'WinBarNC' })
+
+      -- Swap their colors
+      vim.api.nvim_set_hl(0, 'WinBar', { bg = winbar_nc.bg, fg = winbar_nc.fg, bold = winbar_nc.bold })
+      vim.api.nvim_set_hl(0, 'WinBarNC', { bg = winbar_active.bg, fg = winbar_active.fg, bold = winbar_active.bold })
+
       vim.api.nvim_create_autocmd('BufEnter', {
         callback = function()
-          local filepath = vim.fn.expand '%:p' -- Get absolute path
-          local home = vim.fn.expand '$HOME' -- Get home directory path
+          local filepath = vim.fn.expand '%:p'
+          local home = vim.fn.expand '$HOME'
           if filepath:find(home, 1, true) == 1 then
-            filepath = filepath:gsub('^' .. vim.pesc(home), '~') -- Replace $HOME with ~
+            filepath = filepath:gsub('^' .. vim.pesc(home), '~')
           end
-          vim.o.winbar = filepath
+          vim.wo.winbar = filepath
         end,
       })
 
