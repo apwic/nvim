@@ -27,6 +27,7 @@ require('lazy').setup({
 
   -- modular approach: using `require 'path/name'` will
   -- include a plugin definition from file lua/path/name.lua
+  require 'apwic.plugins.colorscheme',
 
   require 'apwic/plugins/gitsigns',
 
@@ -39,8 +40,6 @@ require('lazy').setup({
   require 'apwic/plugins/conform',
 
   require 'apwic/plugins/cmp',
-
-  require 'apwic/plugins/gruvbox',
 
   require 'apwic/plugins/todo-comments',
 
