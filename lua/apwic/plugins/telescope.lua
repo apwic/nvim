@@ -63,6 +63,16 @@ return {
         -- },
         -- pickers = {}
         defaults = {
+          mappings = {
+            i = {
+              ['<C-j>'] = 'results_scrolling_down',
+              ['<C-k>'] = 'results_scrolling_up',
+            },
+            n = {
+              ['<C-j>'] = 'results_scrolling_down',
+              ['<C-k>'] = 'results_scrolling_up',
+            },
+          },
           dynamic_preview_title = true,
           layout_strategy = 'vertical',
         },
