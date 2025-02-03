@@ -162,6 +162,7 @@ return {
         markdown_oxide = {},
         texlab = {},
         gopls = {
+          cmd_env = { GOFUMPT_SPLIT_LONG_LINES = 'on' },
           cmd = { 'gopls' },
           filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
           settings = {
