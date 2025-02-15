@@ -20,19 +20,19 @@
 -- }
 
 -- Gruvbox
-return {
-  {
-    'ellisonleao/gruvbox.nvim',
-    priority = 1000,
-    config = true,
-    opts = ...,
-    init = function()
-      vim.cmd.colorscheme 'gruvbox'
-    end,
-  },
-}
+-- return {
+--   {
+--     'ellisonleao/gruvbox.nvim',
+--     priority = 1000,
+--     config = true,
+--     opts = ...,
+--     init = function()
+--       vim.cmd.colorscheme 'gruvbox'
+--     end,
+--   },
+-- }
 
--- Darkbox
+-- -- Darkbox
 -- return {
 --   'timmypidashev/darkbox.nvim',
 --   lazy = false,
@@ -40,3 +40,12 @@ return {
 --     require('darkbox').load()
 --   end,
 -- }
+--
+
+return {
+  'rose-pine/neovim',
+  name = 'rose-pine',
+  config = function()
+    vim.cmd 'colorscheme rose-pine-moon'
+  end,
+}
