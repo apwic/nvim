@@ -238,6 +238,7 @@ return {
         'yamlfmt',
         'mdformat',
         'jq',
+        'sonarlint-language-server',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 

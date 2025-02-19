@@ -77,6 +77,8 @@ require('lazy').setup({
 
   require 'apwic.plugins.markview',
 
+  require 'apwic.plugins.sonarlint',
+
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
   --
