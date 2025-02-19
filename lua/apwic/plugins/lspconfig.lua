@@ -162,7 +162,7 @@ return {
         markdown_oxide = {},
         texlab = {},
         gopls = {
-          cmd_env = { GOFUMPT_SPLIT_LONG_LINES = 'on' },
+          -- cmd_env = { GOFUMPT_SPLIT_LONG_LINES = 'on' },
           cmd = { 'gopls' },
           filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
           settings = {
@@ -232,6 +232,12 @@ return {
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'yamllint',
+        'jsonlint',
+        'golangci-lint',
+        'yamlfmt',
+        'mdformat',
+        'jq',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
