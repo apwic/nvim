@@ -98,7 +98,7 @@ return {
 
       -- Diagnostics Telescope
       vim.keymap.set('n', '<leader>sdd', builtin.diagnostics, { desc = '[S]earch by [D]iagnostics [D] All' })
-      vim.keymap.set('n', '<leader>sdq', function()
+      vim.keymap.set('n', '<leader>sde', function()
         builtin.diagnostics { severity = vim.diagnostic.severity.ERROR }
       end, { desc = '[S]earch [D]iagnostics [E]rror' })
       vim.keymap.set('n', '<leader>sdw', function()
