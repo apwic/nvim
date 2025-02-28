@@ -75,7 +75,9 @@ require('lazy').setup({
 
   require 'apwic.plugins.go',
 
-  require 'apwic.plugins.markview',
+  -- require 'apwic.plugins.markview',
+
+  require 'apwic.plugins.render-markdown',
 
   require 'apwic.plugins.sonarlint',
 

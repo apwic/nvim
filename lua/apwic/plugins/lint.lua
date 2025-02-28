@@ -7,10 +7,11 @@ return {
       local lint = require 'lint'
       lint.linters_by_ft = {
         json = { 'jsonlint' },
-        markdown = { 'vale' },
-        text = { 'vale' },
-        rst = { 'vale' },
+        -- markdown = { 'vale' },
+        -- text = { 'vale' },
+        -- rst = { 'vale' },
         go = { 'golangcilint' },
+        yaml = { 'yamllint' },
       }
 
       -- To allow other plugins to add linters to require('lint').linters_by_ft,

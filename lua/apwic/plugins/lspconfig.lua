@@ -159,7 +159,8 @@ return {
         -- clangd = {},
         pyright = {},
         rust_analyzer = {},
-        markdown_oxide = {},
+        -- markdown_oxide = {},
+        marksman = {},
         texlab = {},
         gopls = {
           -- cmd_env = { GOFUMPT_SPLIT_LONG_LINES = 'on' },
