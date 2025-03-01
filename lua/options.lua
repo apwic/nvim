@@ -71,4 +71,7 @@ vim.opt.colorcolumn = '80'
 -- Line numbers etc in Netrw
 vim.cmd [[let g:netrw_bufsettings = 'noma nomod nu nobl nowrap ro']]
 
+-- Setup preview height to half of the screen
+vim.opt.previewheight = math.floor(vim.api.nvim_win_get_height(0) / 2)
+
 -- vim: ts=2 sts=2 sw=2 et
