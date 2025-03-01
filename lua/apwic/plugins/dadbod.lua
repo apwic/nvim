@@ -20,4 +20,7 @@ return {
       end,
     })
   end,
+  config = function()
+    vim.keymap.set('n', '<leader>g', ':normal vip<CR><PLUG>(DBUI_ExecuteQuery)', { desc = '[G]o run query under the cursor' })
+  end,
 }
