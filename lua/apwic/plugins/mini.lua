@@ -59,6 +59,17 @@ return {
 
       vim.api.nvim_create_autocmd('BufEnter', {
         callback = function()
+          local exclude_filetypes = { 'dapui_hover' }
+          local filetype = vim.bo.filetype
+
+          -- Check if the current filetype should be excluded
+          for _, ft in ipairs(exclude_filetypes) do
+            if filetype == ft then
+              vim.wo.winbar = nil -- Disable winbar for excluded filetypes
+              return
+            end
+          end
+
           local filepath = vim.fn.expand '%:p'
           local home = vim.fn.expand '$HOME'
           if filepath:find(home, 1, true) == 1 then

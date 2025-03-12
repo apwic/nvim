@@ -57,7 +57,7 @@ require('lazy').setup({
 
   require 'apwic/plugins/bufferline',
 
-  -- require 'apwic.plugins.debug',
+  require 'apwic.plugins.debug',
 
   require 'apwic.plugins.indent_line',
 
@@ -75,11 +75,11 @@ require('lazy').setup({
 
   require 'apwic.plugins.go',
 
-  -- require 'apwic.plugins.markview',
-
   require 'apwic.plugins.render-markdown',
 
   require 'apwic.plugins.sonarlint',
+
+  require 'apwic.plugins.quicker',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.

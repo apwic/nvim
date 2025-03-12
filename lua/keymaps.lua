@@ -30,10 +30,10 @@ vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 --
 --  See `:help wincmd` for a list of all window commands
 vim.keymap.set('n', '<leader>tt', '<cmd>tabnew<cr>', { desc = 'Create new tab' })
-vim.keymap.set('n', '<leader>tn', '<cmd>:tabnext<cr>', { desc = 'Move to next tab' })
-vim.keymap.set('n', '<leader>tp', '<cmd>:tabprev<cr>', { desc = 'Move to previous tab' })
-vim.keymap.set('n', '<leader>to', '<cmd>:tabo<cr>', { desc = 'Close all but current tab' })
-vim.keymap.set('n', '<leader>tc', '<cmd>:tabc<cr>', { desc = 'Close current tab' })
+vim.keymap.set('n', '<leader>tn', '<cmd>tabnext<cr>', { desc = 'Move to next tab' })
+vim.keymap.set('n', '<leader>tp', '<cmd>tabprev<cr>', { desc = 'Move to previous tab' })
+vim.keymap.set('n', '<leader>to', '<cmd>tabo<cr>', { desc = 'Close all but current tab' })
+vim.keymap.set('n', '<leader>tc', '<cmd>tabc<cr>', { desc = 'Close current tab' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
