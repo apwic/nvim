@@ -64,6 +64,17 @@ return {
         -- },
         -- pickers = {}
         defaults = {
+          vimgrep_arguments = {
+            'rg',
+            '--color=never',
+            '--no-heading',
+            '--with-filename',
+            '--line-number',
+            '--column',
+            '--smart-case',
+            '--hidden',
+            '--glob=!*_test.go', -- 👈 Ignores Go test files
+          },
           mappings = {
             i = {
               ['<C-j>'] = 'results_scrolling_down',

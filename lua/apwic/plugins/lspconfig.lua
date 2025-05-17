@@ -168,6 +168,9 @@ return {
           filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
           settings = {
             gopls = {
+              directoryFilters = {
+                '-mocks', -- exclude mocks/
+              },
               completeUnimported = true,
               analyses = {
                 unusedparams = true,
@@ -176,6 +179,9 @@ return {
             },
           },
         },
+        tsserver = {},
+        html = {},
+        cssls = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
