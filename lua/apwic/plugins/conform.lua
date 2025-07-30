@@ -28,7 +28,21 @@ return {
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
         python = { 'isort', 'black' },
-        markdown = { 'mdformat' },
+        markdown = function(bufnr)
+          -- Skip mdformat for Obsidian vaults
+          local file_path = vim.api.nvim_buf_get_name(bufnr)
+          local obsidian_ok, obsidian = pcall(require, 'obsidian')
+          if obsidian_ok and obsidian.get_client then
+            local client = obsidian.get_client()
+            if client and client.dir then
+              local vault_path = tostring(client.dir)
+              if string.match(file_path, vim.pesc(vault_path)) then
+                return {}
+              end
+            end
+          end
+          return { 'mdformat' }
+        end,
         go = { 'gofmt' },
         json = { 'jq' },
         yaml = { 'yamlfmt' },

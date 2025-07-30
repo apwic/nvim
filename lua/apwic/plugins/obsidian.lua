@@ -30,6 +30,42 @@ return {
     ui = { enable = false },
     attachments = {
       img_folder = '0 - Attachment',
+      img_name_func = function()
+        return string.format('%s-', os.date('%Y-%m-%d-%H-%M-%S'))
+      end,
+      img_text_func = function(client, path)
+        local link_path
+        local vault_relative_path = client:vault_relative_path(path)
+        if vault_relative_path ~= nil then
+          link_path = vault_relative_path
+        else
+          link_path = tostring(path)
+        end
+        local display_name = vim.fs.basename(link_path)
+        return string.format('![%s](%s)', display_name, link_path)
+      end,
+    },
+    disable_frontmatter = true,
+    preferred_link_style = 'wiki',
+    follow_url_func = function(url)
+      -- Open the URL in the default web browser.
+      vim.fn.jobstart { 'open', url } -- Mac OS
+      -- vim.fn.jobstart({"xdg-open", url})  -- linux
+    end,
+    mappings = {
+      ['<leader>ip'] = {
+        action = function()
+          -- Custom image paste that bypasses Paste app
+          vim.cmd('silent !pngpaste /tmp/clipboard_image.png 2>/dev/null')
+          if vim.fn.filereadable('/tmp/clipboard_image.png') == 1 then
+            vim.cmd('ObsidianPasteImg')
+            vim.fn.delete('/tmp/clipboard_image.png')
+          else
+            print('No image in clipboard')
+          end
+        end,
+        opts = { desc = 'Paste image from clipboard' }
+      }
     },
   },
 }

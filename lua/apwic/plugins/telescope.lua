@@ -73,7 +73,6 @@ return {
             '--column',
             '--smart-case',
             '--hidden',
-            '--glob=!*_test.go', -- 👈 Ignores Go test files
           },
           mappings = {
             i = {
@@ -87,6 +86,9 @@ return {
           },
           dynamic_preview_title = true,
           layout_strategy = 'vertical',
+          file_sorter = require('telescope.sorters').get_fuzzy_file,
+          generic_sorter = require('telescope.sorters').get_generic_fuzzy_sorter,
+          sorting_strategy = 'ascending',
         },
         extensions = {
           ['ui-select'] = {

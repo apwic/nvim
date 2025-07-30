@@ -81,6 +81,14 @@ require('lazy').setup({
 
   require 'apwic.plugins.quicker',
 
+  require 'apwic.plugins.diffview',
+
+  require 'apwic.plugins.octo',
+
+  require 'apwic.plugins.smart-splits',
+
+  require 'apwic.plugins.jupytext',
+
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
   --
