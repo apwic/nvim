@@ -49,6 +49,17 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Fix terminal scrolling by disabling scrolloff and mouse in terminal buffers
+vim.api.nvim_create_autocmd('TermOpen', {
+  desc = 'Disable scrolloff and mouse in terminal mode for proper TUI app scrolling',
+  group = vim.api.nvim_create_augroup('apwic-terminal-fix', { clear = true }),
+  callback = function()
+    vim.opt_local.scrolloff = 0
+    vim.opt_local.sidescrolloff = 0
+    vim.opt_local.mouse = ''
+  end,
+})
+
 -- Obsidian Keymap
 vim.keymap.set('n', 'gf', function()
   if require('obsidian').util.cursor_on_markdown_link() then

@@ -10,7 +10,7 @@ return {
         -- markdown = { 'vale' },
         -- text = { 'vale' },
         -- rst = { 'vale' },
-        go = { 'golangcilint' },
+        -- go = { 'golangcilint' },
         yaml = { 'yamllint' },
       }
 

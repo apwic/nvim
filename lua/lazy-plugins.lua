@@ -77,7 +77,7 @@ require('lazy').setup({
 
   require 'apwic.plugins.render-markdown',
 
-  require 'apwic.plugins.sonarlint',
+  -- require 'apwic.plugins.sonarlint',
 
   require 'apwic.plugins.quicker',
 
@@ -88,7 +88,6 @@ require('lazy').setup({
   require 'apwic.plugins.smart-splits',
 
   require 'apwic.plugins.jupytext',
-
 
   require 'apwic.plugins.peek',
 
