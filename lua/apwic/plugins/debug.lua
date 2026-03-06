@@ -47,11 +47,11 @@ return {
 
     vim.fn.sign_define('DapBreakpoint', { text = '🛑', texthl = '', linehl = '', numhl = '' })
     -- Basic debugging keymaps, feel free to change to your liking!
-    vim.keymap.set('n', '<C-5>', dap.continue, { desc = 'Debug: Start/Continue' })
-    vim.keymap.set('n', '<C-6>', dap.step_back, { desc = 'Debug: Step Back' })
-    vim.keymap.set('n', '<C-7>', dap.step_into, { desc = 'Debug: Step Into' })
-    vim.keymap.set('n', '<C-8>', dap.step_over, { desc = 'Debug: Step Over' })
-    vim.keymap.set('n', '<C-9>', dap.step_out, { desc = 'Debug: Step Out' })
+    vim.keymap.set('n', '<C-A-5>', dap.continue, { desc = 'Debug: Start/Continue' })
+    vim.keymap.set('n', '<C-A-6>', dap.step_back, { desc = 'Debug: Step Back' })
+    vim.keymap.set('n', '<C-A-7>', dap.step_into, { desc = 'Debug: Step Into' })
+    vim.keymap.set('n', '<C-A-8>', dap.step_over, { desc = 'Debug: Step Over' })
+    vim.keymap.set('n', '<C-A-9>', dap.step_out, { desc = 'Debug: Step Out' })
     vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, { desc = 'Debug: Toggle Breakpoint' })
     vim.keymap.set('n', '<leader>B', function()
       dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
