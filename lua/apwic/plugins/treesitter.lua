@@ -40,12 +40,8 @@ return {
         callback = function(args)
           local ft = vim.bo[args.buf].filetype
           local lang = vim.treesitter.language.get_lang(ft)
-          if lang then
-            if pcall(vim.treesitter.language.inspect, lang) then
-              vim.treesitter.start(args.buf, lang)
-            else
-              pcall(require('nvim-treesitter').install, { lang })
-            end
+          if lang and pcall(vim.treesitter.language.inspect, lang) then
+            vim.treesitter.start(args.buf, lang)
           end
         end,
       })
