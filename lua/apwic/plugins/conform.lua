@@ -13,7 +13,7 @@ return {
       },
     },
     opts = {
-      notify_on_error = false,
+      notify_on_error = true,
       format_on_save = function(bufnr)
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
@@ -52,6 +52,7 @@ return {
         end,
         go = { 'gofmt' },
         json = { 'jq' },
+        jsonc = { 'jq' },
         yaml = { 'yamlfmt' },
         http = { 'kulala' },
         --

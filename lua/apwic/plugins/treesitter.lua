@@ -34,6 +34,8 @@ return {
           'vimdoc',
           'json',
           'go',
+          'cue',
+          'proto',
         }
 
         local installed = require('nvim-treesitter.config').get_installed()
