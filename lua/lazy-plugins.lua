@@ -75,6 +75,8 @@ require('lazy').setup({
 
   require 'apwic.plugins.go',
 
+  require 'apwic.plugins.treesj',
+
   require 'apwic.plugins.render-markdown',
 
   -- require 'apwic.plugins.sonarlint',

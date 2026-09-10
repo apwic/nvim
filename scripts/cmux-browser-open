@@ -1,0 +1,7 @@
+#!/bin/sh
+SCRIPT_DIR="$(dirname "$0")"
+output=$(cmux browser open-split "$1" 2>&1)
+surface=$(echo "$output" | grep -o 'surface:[^ ]*')
+if [ -n "$surface" ]; then
+  cmux browser "$surface" addinitscript --script "$(cat "$SCRIPT_DIR/vim-scroll.js")"
+fi

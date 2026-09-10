@@ -54,8 +54,8 @@ return {
           return { 'mdformat' }
         end,
         go = { 'gofmt' },
-        json = { 'jq' },
-        jsonc = { 'jq' },
+        json = { 'prettier' },
+        jsonc = { 'prettier' },
         yaml = { 'yamlfmt' },
         http = { 'kulala' },
         --

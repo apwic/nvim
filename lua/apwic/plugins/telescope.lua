@@ -112,6 +112,65 @@ return {
         },
       }
 
+      -- Telescope previewers attach Tree-sitter highlighting without setting
+      -- the buffer filetype. Treesitter Context requires that filetype to
+      -- calculate and render the selected result's parent scope.
+      local telescope_context_augroup = vim.api.nvim_create_augroup('telescope_context', { clear = true })
+      local function raise_telescope_context(bufnr)
+        local preview_win = vim.fn.bufwinid(bufnr)
+        if preview_win == -1 then
+          return
+        end
+
+        for _, win in ipairs(vim.api.nvim_list_wins()) do
+          if vim.w[win].treesitter_context or vim.w[win].treesitter_context_line_number then
+            local config = vim.api.nvim_win_get_config(win)
+            if config.relative == 'win' and config.win == preview_win and config.zindex ~= 60 then
+              config.zindex = 60
+              vim.api.nvim_win_set_config(win, config)
+            end
+          end
+        end
+      end
+
+      vim.api.nvim_create_autocmd('User', {
+        group = telescope_context_augroup,
+        pattern = 'TelescopePreviewerLoaded',
+        callback = function(args)
+          local filetype = args.data and args.data.filetype
+          if not filetype or filetype == '' then
+            return
+          end
+
+          vim.bo[args.buf].filetype = filetype
+          if not vim.b[args.buf].telescope_context_refresh then
+            vim.b[args.buf].telescope_context_refresh = true
+            vim.api.nvim_create_autocmd('WinScrolled', {
+              group = telescope_context_augroup,
+              buffer = args.buf,
+              callback = function()
+                vim.schedule(function()
+                  raise_telescope_context(args.buf)
+                end)
+              end,
+            })
+          end
+
+          vim.defer_fn(function()
+            if not vim.api.nvim_buf_is_valid(args.buf) then
+              return
+            end
+
+            vim.api.nvim_buf_call(args.buf, function()
+              vim.api.nvim_exec_autocmds('WinScrolled', { modeline = false })
+            end)
+            vim.schedule(function()
+              raise_telescope_context(args.buf)
+            end)
+          end, 20)
+        end,
+      })
+
       -- Enable Telescope extensions if they are installed
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')

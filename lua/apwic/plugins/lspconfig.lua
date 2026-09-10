@@ -170,14 +170,38 @@ return {
           filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
           settings = {
             gopls = {
+              -- Paths are prefixes relative to the workspace root; use `**/` to
+              -- match at any depth. Setting this replaces gopls' default, so
+              -- node_modules has to be listed explicitly.
               directoryFilters = {
-                '-mocks', -- exclude mocks/
+                '-**/node_modules',
+                '-**/.tilt', -- Tilt's .deps cache: ~4.6k Go files in 5 foreign modules
+                '-**/bin',
+                '-**/mocks', -- 58 nested mocks/ dirs (the old '-mocks' matched nothing)
               },
+              -- Only index workspace packages for workspace/symbol, not every
+              -- loaded dependency + stdlib. Trades <leader>ws reach for memory.
+              symbolScope = 'workspace',
               completeUnimported = true,
               analyses = {
                 unusedparams = true,
               },
               gofumpt = true,
+              -- Lenses that run their own go commands; unused here.
+              codelenses = {
+                run_govulncheck = false,
+                upgrade_dependency = false,
+                vendor = false,
+                regenerate_cgo = false,
+                -- `generate` puts a lens on `//go:generate`, which in these
+                -- packages sits on line 1. Nvim's codelens display runs
+                -- `vim.cmd('normal! zb')` for a lens on row 0
+                -- (runtime/lua/vim/lsp/codelens.lua:275, guarding
+                -- neovim/neovim#16166). `normal!` forces insert mode to exit, so
+                -- ~200ms after opening a line the pending auto-indent is deleted
+                -- and the cursor snaps to column 1 mid-typing.
+                generate = false,
+              },
             },
           },
         },
@@ -185,6 +209,7 @@ return {
         html = {},
         cssls = {},
         angularls = {},
+        tilt_ls = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -240,6 +265,10 @@ return {
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
+      -- tilt_ls ships inside the `tilt` binary (installed via Homebrew), not Mason.
+      ensure_installed = vim.tbl_filter(function(name)
+        return name ~= 'tilt_ls'
+      end, ensure_installed)
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
         'yamllint',
@@ -247,7 +276,7 @@ return {
         -- 'golangci-lint',
         'yamlfmt',
         'mdformat',
-        'jq',
+        'prettier',
         'sonarlint-language-server',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
@@ -261,6 +290,28 @@ return {
         server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
         vim.lsp.config(server_name, server)
       end
+      -- Never activate a server for a buffer that isn't backed by a real file.
+      -- Nvim's auto-attach only guards on `buftype` (see lsp.lua:lsp_enable_callback),
+      -- and diffview's staged-index buffers deliberately have `buftype = ""` so they
+      -- can be written back to the index. gopls then gets a `diffview://` DocumentURI
+      -- and answers with `-32700 JSON RPC parse error`.
+      for server_name in pairs(servers) do
+        local resolved = vim.lsp.config[server_name]
+        local orig_root_dir = resolved.root_dir
+        local root_markers = resolved.root_markers
+        vim.lsp.config(server_name, {
+          root_dir = function(bufnr, on_dir)
+            if not vim.uri_from_bufnr(bufnr):match('^file://') then
+              return -- not calling on_dir() means: don't start this server here
+            end
+            if type(orig_root_dir) == 'function' then
+              return orig_root_dir(bufnr, on_dir)
+            end
+            on_dir(orig_root_dir or (root_markers and vim.fs.root(bufnr, root_markers)))
+          end,
+        })
+      end
+
       vim.lsp.enable(vim.tbl_keys(servers))
     end,
   },

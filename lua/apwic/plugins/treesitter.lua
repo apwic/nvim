@@ -7,6 +7,9 @@ return {
       require('nvim-treesitter').setup()
       require('nvim-treesitter.install').prefer_git = true
 
+      -- Tiltfiles are Starlark; reuse the starlark parser for highlighting.
+      vim.treesitter.language.register('starlark', 'tiltfile')
+
       -- Enable treesitter highlighting per buffer
       vim.api.nvim_create_autocmd('FileType', {
         callback = function(args)
@@ -36,6 +39,7 @@ return {
           'go',
           'cue',
           'proto',
+          'starlark', -- used for Tiltfiles (registered above)
         }
 
         local installed = require('nvim-treesitter.config').get_installed()
@@ -48,6 +52,17 @@ return {
         end
       end, 0)
     end,
+  },
+  { -- Show the parent scopes (context) as sticky lines at the top of the window
+    'nvim-treesitter/nvim-treesitter-context',
+    event = { 'BufReadPost', 'BufNewFile' },
+    opts = {
+      multiwindow = true, -- show context in eligible splits and Telescope preview windows
+      max_lines = 5, -- cap the pinned parent lines so deep nesting doesn't eat the screen
+      mode = 'cursor', -- calculate context from the cursor position
+      trim_scope = 'outer', -- when over max_lines, drop the outermost parents first
+      multiline_threshold = 1, -- collapse multiline scope openers to a single line
+    },
   },
 }
 -- vim: ts=2 sts=2 sw=2 et

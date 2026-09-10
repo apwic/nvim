@@ -11,9 +11,16 @@ return {
         -- markdown = { 'vale' },
         -- text = { 'vale' },
         -- rst = { 'vale' },
-        -- go = { 'golangcilint' },
+        go = { 'golangcilint' },
         yaml = { 'yamllint' },
       }
+
+      -- Keep editor feedback quick; full linting still runs from the CLI and
+      -- pre-commit hooks.
+      local golangcilint = require 'lint.linters.golangcilint'
+      table.insert(golangcilint.args, 2, '--fast-only')
+      table.insert(golangcilint.args, 2, '--allow-serial-runners')
+      lint.linters.golangcilint = golangcilint
 
       -- To allow other plugins to add linters to require('lint').linters_by_ft,
       -- instead set linters_by_ft like this:
@@ -52,8 +59,21 @@ return {
       local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })
       vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave' }, {
         group = lint_augroup,
-        callback = function()
-          require('lint').try_lint()
+        callback = function(args)
+          -- Only lint buffers backed by a real file. Diffview's buffers are named
+          -- `diffview://…/:0:/path`, which linters resolve against cwd and fail on --
+          -- golangci-lint logs a typechecking error and exits 7 (ErrorWasLogged).
+          if not vim.uri_from_bufnr(args.buf):match('^file://') or vim.bo[args.buf].buftype ~= '' then
+            return
+          end
+
+          -- golangci-lint is too expensive to run every time insert mode ends.
+          if vim.bo.filetype == 'go' and args.event == 'InsertLeave' then
+            return
+          end
+
+          local cwd = vim.fs.root(0, { '.git', 'go.work', 'go.mod' }) or vim.fn.getcwd()
+          require('lint').try_lint(nil, { cwd = cwd })
         end,
       })
 
