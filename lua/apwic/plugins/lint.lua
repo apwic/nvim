@@ -17,10 +17,23 @@ return {
 
       -- Keep editor feedback quick; full linting still runs from the CLI and
       -- pre-commit hooks.
+      --
+      -- nvim-lint builds golangcilint.args by shelling out to `golangci-lint version`
+      -- as its module loads. When the binary is missing that call raises E902, the
+      -- plugin's pcall swallows it, and args comes back nil -- so the table.insert
+      -- below would take this entire config block down with it, disabling json and
+      -- yaml linting too. Guard it: no binary just means no Go linting.
       local golangcilint = require 'lint.linters.golangcilint'
-      table.insert(golangcilint.args, 2, '--fast-only')
-      table.insert(golangcilint.args, 2, '--allow-serial-runners')
-      lint.linters.golangcilint = golangcilint
+      if type(golangcilint.args) == 'table' then
+        table.insert(golangcilint.args, 2, '--fast-only')
+        table.insert(golangcilint.args, 2, '--allow-serial-runners')
+        lint.linters.golangcilint = golangcilint
+      else
+        lint.linters_by_ft.go = nil
+        vim.schedule(function()
+          vim.notify('nvim-lint: golangci-lint not found, Go linting disabled', vim.log.levels.WARN)
+        end)
+      end
 
       -- To allow other plugins to add linters to require('lint').linters_by_ft,
       -- instead set linters_by_ft like this:
